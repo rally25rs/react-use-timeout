@@ -1,0 +1,37 @@
+{
+  "name": "react-use-timeout",
+  "version": "1.0.0",
+  "description": "React hooks for setTimeout and setInterval.",
+  "main": "index.js",
+  "repository": "https://github.com/rally25rs/react-use-timeout",
+  "author": "Jeff Valore (https://github.com/rally25rs)",
+  "license": "MIT",
+  "private": false,
+  "keywords": [
+    "react"
+  ],
+  "files": [
+    "index.js",
+    "cjs"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "test": "rollup -c && jest"
+  },
+  "dependencies": {
+    "react": ">=16.8.0"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.4.0",
+    "@babel/preset-env": "7.4.2",
+    "@babel/preset-react": "7.0.0",
+    "babel-jest": "24.5.0",
+    "jest": "24.5.0",
+    "react-dom": "16.8.5",
+    "rollup": "1.7.0",
+    "rollup-plugin-babel": "4.3.2"
+  }
+}
