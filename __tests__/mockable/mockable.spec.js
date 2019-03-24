@@ -7,7 +7,12 @@ import TestComponent from './TestComponent';
 // Mock the useTimeout function to execute all timeouts at 0ms
 jest.mock('../../index', () => {
   return {
-    useTimeout: jest.fn(callback => setTimeout(callback, 0)),
+    useTimeout: callback => {
+      return {
+        start: jest.fn(() => setTimeout(callback, 0)),
+        stop: () => {},
+      };
+    },
   };
 });
 

@@ -2,7 +2,7 @@
 
 React hooks that wrapper standard JS `setTimeout` and `setInterval`.
 
-### Why would I use this?
+## Why would I use this?
 
 #### Helps prevent memory leaks.
 
@@ -62,7 +62,20 @@ Examples in Jest:
 // Mock the useTimeout hook to execute all timeouts at 0ms
 jest.mock('react-use-timeout', () => {
   return {
-    useTimeout: jest.fn(callback => setTimeout(callback, 0)),
+    useTimeout: callback => {
+      return {
+        start: jest.fn(() => setTimeout(callback, 0)),
+        stop: () => {},
+        restart: () => {},
+      };
+    },
+    useInterval: callback => {
+      return {
+        start: jest.fn(() => setTimeout(callback, 0)),
+        stop: () => {},
+        restart: () => {},
+      };
+    },
   };
 });
 ```
@@ -71,13 +84,25 @@ jest.mock('react-use-timeout', () => {
 // Mock the hooks to never execute timeouts
 jest.mock('react-use-timeout', () => {
   return {
-    useTimeout: () => {},
-    useInterval: () => {},
+    useTimeout: () => {
+      return {
+        start: () => {},
+        stop: () => {},
+        restart: () => {},
+      };
+    },
+    useInterval: () => {
+      return {
+        start: () => {},
+        stop: () => {},
+        restart: () => {},
+      };
+    },
   };
 });
 ```
 
-### How to Use
+## How to Use
 
 You can install this library using
 
@@ -102,7 +127,10 @@ Call the hook to get an instance of a timeout. You pass a callback to execute, a
 The returned `timeout` instance provides 2 functions:
 
 * `.start(timeout)` : Start the timeout. Optionally you can pass a new timeout duration. If passed, this will override the duration passed to `useTimeout()`
+
 * `.stop()` : Cancels the timeout.
+
+* `.restart()` : Restart the timeout. The same as calling `.stop(); .start();`.
 
 ```
 import React, {useEffect, useCallback, useState} from 'react';
@@ -134,6 +162,8 @@ The returned `interval` instance provides 2 functions:
 
 * `.start(timeout)` : Start the intrval. Optionally you can pass a new timeout duration. If passed, this will override the duration passed to `useInterval()`
 * `.stop()` : Cancels the interval.
+
+* `.restart()` : Restart the interval. The same as calling `.stop(); .start();`.
 
 ```
 import React, {useEffect, useCallback, useState} from 'react';
